@@ -1,0 +1,28 @@
+services:
+  api:
+    image: thecodingmachine/php:8.2-v4-apache-node18
+    volumes:
+      - ../api:/var/www/html/:delegated
+    environment:
+      # PHP EXTENSIONS
+      PHP_EXTENSION_GD: 1
+      # GLOBAL ENVIRONMENT
+      APACHE_DOCUMENT_ROOT: public
+      # LARAVEL SPECIFICS
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${ENV}
+      APP_DEBUG: ${DEBUG}
+      APP_URL: ${HTTP_PROTOCOL}://api.${DOMAIN}
+      HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      # DATABASE
+      DB_DATABASE: ${DATABASE_NAME}
+      DB_USERNAME: ${DATABASE_USER}
+      DB_PASSWORD: ${DATABASE_PASSWORD}
+      DB_HOST: database
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend.rule=Host(`api.${DOMAIN}`)
+    depends_on:
+      database:
+        condition: service_healthy
+

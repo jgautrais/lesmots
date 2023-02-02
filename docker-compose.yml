@@ -1,0 +1,2 @@
+# see the containers folder to manage containers
+# see the COMPOSE_FILE variable in the .env file to manage included files (ordered)
