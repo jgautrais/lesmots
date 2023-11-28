@@ -97,6 +97,37 @@ class DictService {
             return false;
         }
 
+        // Test nb of letters
+        $nbLetters = [];
+        foreach ($randomLetters as $let) {
+            if (array_key_exists($let, $nbLetters)) {
+                $nbLetters[$let] = $nbLetters[$let] + 1;
+            } else {
+                $nbLetters[$let] = 1;
+            }
+        }
+
+        var_dump($nbLetters);
+
+        foreach ($match as $id => $wording) {
+            $testNbLetters = [];
+            foreach (mb_str_split($wording) as $lett) {
+                if (array_key_exists($lett, $testNbLetters)) {
+                    $testNbLetters[$lett] = $testNbLetters[$lett] + 1;
+                } else {
+                    $testNbLetters[$lett] = 1;
+                }
+            }
+
+            foreach ($testNbLetters as $lette => $num) {
+                if ($num > $nbLetters[$lette]) {
+                    unset($id);
+                }
+            }
+        }
+
+
+
         return ['match' => $match, 'letters' => $randomLetters];
     }
 
