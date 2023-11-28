@@ -51,7 +51,7 @@ class DictService {
         $nbSpecialChar = rand(0, 2);
 
         $randomLetters = [];
-        for($i = 0 ; $i < 9 - $nbSpecialChar ; $i++) {
+        for($i = 0 ; $i < 6 - $nbSpecialChar ; $i++) {
             $randomLetters[] = $letters[rand(0, count($letters) - (1 + $nbSpecialChar))];
         }
 
@@ -88,7 +88,7 @@ class DictService {
 
         $isNine = false;
         foreach ($match as $wor) {
-            if (mb_strlen($wor) === 9) {
+            if (mb_strlen($wor) === 6) {
                 $isNine = true;
             }
         }
@@ -107,8 +107,6 @@ class DictService {
             }
         }
 
-        var_dump($nbLetters);
-
         foreach ($match as $id => $wording) {
             $testNbLetters = [];
             foreach (mb_str_split($wording) as $lett) {
@@ -121,12 +119,21 @@ class DictService {
 
             foreach ($testNbLetters as $lette => $num) {
                 if ($num > $nbLetters[$lette]) {
-                    unset($id);
+                    unset($match[$id]);
                 }
             }
         }
 
+        $isNine = false;
+        foreach ($match as $wor) {
+            if (mb_strlen($wor) === 6) {
+                $isNine = true;
+            }
+        }
 
+        if (!$isNine) {
+            return false;
+        }
 
         return ['match' => $match, 'letters' => $randomLetters];
     }
