@@ -49,7 +49,7 @@ class CreateWordsPool extends Command
             'letters' => json_encode($wordsService->getLettersPool()),
             'pool' => json_encode($wordsService->getMatchingWords()),
             'maxLengthWords' => $wordsService->getMatchingWordsOfMaxLength(),
-            'day' => Carbon::today()->toDate(),
+            'day' => Carbon::today()->addDays(2)->toDate(),
         ]);
         $end_time = microtime(true);
 
