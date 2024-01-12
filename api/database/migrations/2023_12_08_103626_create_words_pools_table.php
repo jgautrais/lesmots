@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('letters');
             $table->json('pool');
             $table->string('maxLengthWords');
-            $table->date('day');
+            $table->date('day')->unique();
         });
     }
 

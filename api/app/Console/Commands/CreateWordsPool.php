@@ -14,7 +14,7 @@ class CreateWordsPool extends Command
      *
      * @var string
      */
-    protected $signature = 'create:wordsPool';
+    protected $signature = 'create:wordsPool {--day=}';
 
     /**
      * The console command description.
@@ -31,7 +31,37 @@ class CreateWordsPool extends Command
     public function handle(WordsService $wordsService)
     {
         $start_time = microtime(true);
+        $day = $this->option('day');
+
+        if ($day !== null && ! preg_match('/'.config('services.regex.date_format').'/', $day)) {
+            $this->error("Day option must be in format 'YYYY-MM-DD'");
+
+            return Command::FAILURE;
+        }
+
+        if ($day) {
+            $day = Carbon::createFromFormat('Y-m-d', $day);
+        } else {
+            $day = Carbon::today()->addDays(2);
+        }
+
+        if (! $day) {
+            $this->error('Error parsing the date from format Y-m-d');
+
+            return Command::FAILURE;
+        }
+
+        $day = $day->toDate();
+
         $wordsService->generateWords();
+
+        $wordsPoolOfTheDay = WordsPool::query()->whereDate('day', $day->format('Y-m-d'))->first();
+
+        if ($wordsPoolOfTheDay !== null) {
+            $this->error('Words pool already existing for the day '.$day->format('Y-m-d'));
+
+            return Command::FAILURE;
+        }
 
         $wordPoolsWithSameMatchingWords = WordsPool::query()->find([
             'maxLengthWords' => $wordsService->getMatchingWordsOfMaxLength(),
@@ -46,10 +76,10 @@ class CreateWordsPool extends Command
         }
 
         WordsPool::query()->create([
-            'letters' => json_encode($wordsService->getLettersPool()),
-            'pool' => json_encode($wordsService->getMatchingWords()),
+            'letters' => $wordsService->getLettersPool(),
+            'pool' => $wordsService->getMatchingWords(),
             'maxLengthWords' => $wordsService->getMatchingWordsOfMaxLength(),
-            'day' => Carbon::today()->addDays(2)->toDate(),
+            'day' => $day,
         ]);
         $end_time = microtime(true);
 
