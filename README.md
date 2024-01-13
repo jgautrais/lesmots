@@ -8,10 +8,10 @@ Fill all `.env` variables with necessary values.
 
 ### Starting containers
 You just have to run :
-`docker-compose up -d`
+`docker compose up -d`
 
 After your containers are running, you may connect into the container `api` through :  
-`docker-compose exec api bash`
+`docker compose exec api bash`
 
 ### Key generate
 You must run inside the container :  
