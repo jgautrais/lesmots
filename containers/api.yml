@@ -1,8 +1,13 @@
 services:
   api:
-    image: thecodingmachine/php:8.2-v4-apache-node18
-    volumes:
-      - ../api:/var/www/html/:delegated
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "netstat -an | grep :9000 || exit 1" ]
+      interval: 6s
+      timeout: 6s
+      retries: 40
     environment:
       # PHP EXTENSIONS
       PHP_EXTENSION_GD: 1
@@ -21,8 +26,4 @@ services:
       DB_HOST: database
     labels:
       - traefik.enable=true
-      - traefik.http.routers.backend.rule=Host(`api.${DOMAIN}`)
-    depends_on:
-      database:
-        condition: service_healthy
-
+      - traefik.http.routers.api.rule=Host(`api.${DOMAIN}`)

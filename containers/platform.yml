@@ -1,10 +1,8 @@
 services:
   platform:
-    image: thecodingmachine/nodejs:v2-18-bullseye
-    volumes:
-      - ../platform:/usr/src/app/:delegated
-    expose:
-      - 3000
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.platform.rule=Host(`${DOMAIN}`)
+    environment:
+      ENV: ${ENV}
+      HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      DOMAIN: ${DOMAIN}
+      APP_NAME: ${APP_NAME}
+
