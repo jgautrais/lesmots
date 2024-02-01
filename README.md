@@ -25,17 +25,7 @@ In `api` container, run `pint`
 In `api` container, run `composer phpstan`, config file is in `phpstan.neon`
 
 ### Authentification
-Create OAuth client with  following command: `php artisan passport:client --client`
 
-Make POST request to `oauth/token` endpoint with following body:
-```json
-{
-    "grant_type": "client_credentials",
-    "client_id": "client-id",
-    "client_secret": "client-secret"
-}
-```
-Use OAuth token for further requests
 
 ### Create Words Pool
 To create words pools, use the command `php artisan create:wordsPool {--day=}`  

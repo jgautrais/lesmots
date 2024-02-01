@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['oauth/*', 'api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['http://lesmots.localhost'],
 
     'allowed_origins_patterns' => [],
 
