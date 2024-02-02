@@ -48,7 +48,10 @@
             "@php artisan key:generate --ansi"
         ],
         "phpstan": [
-            "./vendor/bin/phpstan analyse"
+            "./vendor/bin/phpstan analyse --memory-limit=4G"
+        ],
+        "pint": [
+            "./vendor/bin/pint"
         ]
     },
     "extra": {

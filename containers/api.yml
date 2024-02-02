@@ -19,6 +19,12 @@ services:
       APP_DEBUG: ${DEBUG}
       APP_URL: ${HTTP_PROTOCOL}://api.${DOMAIN}
       HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      # API Session Authentication
+      SANCTUM_STATEFUL_DOMAINS: ${DOMAIN}
+      SESSION_DOMAIN: .${DOMAIN}
+      SESSION_SECURE_COOKIE: 0 # Set 1 for production environment
+      # FrontEnd
+      ALLOWED_ORIGINS: ${HTTP_PROTOCOL}://${DOMAIN}
       # DATABASE
       DB_DATABASE: ${DATABASE_NAME}
       DB_USERNAME: ${DATABASE_USER}

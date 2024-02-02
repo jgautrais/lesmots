@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['accept:application/json'])->group(function () {
+Route::middleware(['accept:application/json', 'domain'])->group(function () {
     Route::get('/wordsPool/{day}', [WordsPoolController::class, 'getWordsPoolOfTheDay'])->where('day', config('services.regex.date_format'));
 });

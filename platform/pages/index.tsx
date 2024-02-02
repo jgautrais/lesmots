@@ -26,6 +26,7 @@ export default function Home() {
           <div className="container mx-auto">
               <h1 className="mx-auto text-center text-5xl font-bold mt-5">Les Mots</h1>
           </div>
+          {JSON.stringify(data, null, 2)}
       </main>
     </>
   )
