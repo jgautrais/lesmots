@@ -35,7 +35,6 @@ CMD ["php-fpm"]
 ### BACKEND PRODUCTION
 FROM api-base as api-production
 
-RUN pwd && ls
 COPY --chown=www-data:www-data ../api .
 RUN composer install --no-dev
 
