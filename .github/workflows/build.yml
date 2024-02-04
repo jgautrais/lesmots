@@ -20,7 +20,7 @@ jobs:
         working-directory: api
         run: |
           COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker -D build --target api-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:$COMMIT_SHA -f ./Dockerfile --progress=plain --no-cache .   
+          docker -D build --progress=plain --no-cache --target api-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:$COMMIT_SHA -f ./Dockerfile .   
 
       - name: Push image to GHCR
         working-directory: api
