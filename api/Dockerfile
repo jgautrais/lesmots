@@ -35,7 +35,7 @@ CMD ["php-fpm"]
 ### BACKEND PRODUCTION
 FROM api-base as api-production
 
-COPY --chown=www-data:www-data ./* .
+COPY --chown=www-data:www-data . .
 RUN composer install --no-dev
 
 # Setup entrypoint
