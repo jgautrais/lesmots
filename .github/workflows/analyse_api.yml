@@ -1,0 +1,22 @@
+name: Analyse API
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup App
+        working-directory: ./app
+        run: cp .env.example .env
+      - name: Install Composer Dependencies
+        working-directory: ./app
+        run: composer install --prefer-dist
+      - name: Run Analysis
+        working-directory: ./app
+        run: composer phpstan
+
