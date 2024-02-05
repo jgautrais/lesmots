@@ -18,12 +18,8 @@ jobs:
 
       - name: Build and tag image
         working-directory: api
-        run: |
-          COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker build --target api-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:$COMMIT_SHA -f Dockerfile .   
+        run: docker build --target api-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.head_ref || github.ref_name }} -f Dockerfile .
 
       - name: Push image to GHCR
         working-directory: api
-        run: |
-          COMMIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:$COMMIT_SHA
+        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.head_ref || github.ref_name }}
