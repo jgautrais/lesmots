@@ -18,7 +18,7 @@ jobs:
 
       - name: Build and tag API image
         working-directory: api
-        run: docker build --target api-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.head_ref || github.ref_name }} -f Dockerfile .
+        run: docker build --build-arg=DOCKER_GID=${{ secrets.DOCKER_GID }} --build-arg=DOCKER_UID=${{ secrets.DOCKER_UID }} --target api-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.head_ref || github.ref_name }} -f Dockerfile .
 
       - name: Push API image to GHCR
         working-directory: api
@@ -26,7 +26,7 @@ jobs:
 
       - name: Build and tag API-webserver image
         working-directory: api
-        run: docker build --target webserver-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }} -f Dockerfile .
+        run: docker build --build-arg=DOCKER_GID=${{ secrets.DOCKER_GID }} --build-arg=DOCKER_UID=${{ secrets.DOCKER_UID }} --target webserver-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }} -f Dockerfile .
 
       - name: Push API-webserver image to GHCR
         working-directory: api
@@ -34,7 +34,7 @@ jobs:
 
       - name: Build and tag API-cron image
         working-directory: api
-        run: docker build --target api-cron-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }} -f Dockerfile .
+        run: docker build --build-arg=DOCKER_GID=${{ secrets.DOCKER_GID }} --build-arg=DOCKER_UID=${{ secrets.DOCKER_UID }} --target api-cron-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }} -f Dockerfile .
 
       - name: Push API-cron image to GHCR
         working-directory: api
