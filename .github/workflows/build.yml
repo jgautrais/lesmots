@@ -16,10 +16,26 @@ jobs:
         working-directory: api
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and tag image
+      - name: Build and tag API image
         working-directory: api
         run: docker build --target api-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.head_ref || github.ref_name }} -f Dockerfile .
 
-      - name: Push image to GHCR
+      - name: Push API image to GHCR
         working-directory: api
         run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.head_ref || github.ref_name }}
+
+      - name: Build and tag API-webserver image
+        working-directory: api
+        run: docker build --target webserver-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }} -f Dockerfile .
+
+      - name: Push API-webserver image to GHCR
+        working-directory: api
+        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }}
+
+      - name: Build and tag API-cron image
+        working-directory: api
+        run: docker build --target api-cron-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }} -f Dockerfile .
+
+      - name: Push API-cron image to GHCR
+        working-directory: api
+        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }}

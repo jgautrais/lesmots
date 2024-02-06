@@ -1,8 +1,10 @@
 services:
   database_administration:
-    image: phpmyadmin/phpmyadmin:5
+    image: arm64v8/phpmyadmin:latest
+    profiles: ["local", "test"]
     environment:
-      PMA_HOSTS: database
+      PMA_HOSTS: database,database_test
     labels:
       - traefik.enable=true
       - traefik.http.routers.database_administration.rule=Host(`pma.${DOMAIN}`)
+      - traefik.http.routers.database_administration.tls=true

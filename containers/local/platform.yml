@@ -10,3 +10,5 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.platform.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.platform.tls=true
+

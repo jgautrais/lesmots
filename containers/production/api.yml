@@ -1,0 +1,27 @@
+services:
+  api:
+    image: docker pull ghcr.io/jgautrais/jgautrais/lesmots:dev
+    environment:
+      TEMPLATE_PHP_INI: production
+      SESSION_SECURE_COOKIE: 1
+      APP_KEY: ${APP_KEY}
+    volumes:
+      - api_storage:/var/www/html/storage
+
+  api_webserver:
+    image: git.thecodingmachine.com:444/tcm-projects/${PROJECT_NAME}/lesmots-webserver:dev
+    restart: always
+    volumes:
+      - backend_webserver_logs:/static-logs
+      # Next line is needed only if you use a symbolic link in backend dockerfile
+      # - backend_storage:/var/www/html/backend_webserver
+    labels:
+      - traefik.http.routers.api_webserver.entrypoints=websecure
+      - traefik.http.routers.api_webserver.tls.certresolver=httpsresolver
+
+  api_cron:
+    extends: api
+    image: docker pull ghcr.io/jgautrais/jgautrais/lesmots-cron:dev
+
+volumes:
+  api_storage

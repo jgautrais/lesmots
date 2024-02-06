@@ -23,7 +23,7 @@ EXPOSE 3000
 ### NODE BUILDER IMAGE ###
 ##########################
 # This image is used for SPA in production
-# This image is used to build sources of your pages and get the /dist (or equivalent) folder
+# This image is used to build sources of your app and get the /dist (or equivalent) folder
 FROM platform-base AS builder
 
 COPY package.json ./
@@ -33,10 +33,9 @@ RUN yarn --frozen-lockfile
 
 ENV NODE_ENV=production
 
-COPY ../platform .
+COPY . .
 
 RUN yarn build
-
 
 ##############################
 ### FRONT NGINX PROD IMAGE ###
@@ -45,11 +44,13 @@ RUN yarn build
 # This image is used for SPA in production
 FROM nginx:stable AS platform-webserver-production
 
-RUN apt update && apt install -y logrotate
+RUN apt update && apt install -y logrotate cron
 
 COPY docker/nginx/production/logrotate-nginx.conf /etc/logrotate.d/nginx
+COPY docker/nginx/production/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN chmod 644 /etc/logrotate.d/nginx
+RUN chmod +x /docker-entrypoint.sh
 
 RUN mkdir /app
 RUN mkdir /static-logs
@@ -59,4 +60,3 @@ RUN touch /static-logs/error.log
 ADD docker/nginx/production/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=builder /app/dist /app
-

@@ -1,9 +1,0 @@
-#!/bin/sh
-set -ex
-
-composer install
-
-php artisan migrate --force
-
-nginx -g 'daemon off;' &
-exec /usr/local/bin/docker-php-entrypoint "$@"

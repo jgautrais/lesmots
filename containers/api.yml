@@ -30,6 +30,19 @@ services:
       DB_USERNAME: ${DATABASE_USER}
       DB_PASSWORD: ${DATABASE_PASSWORD}
       DB_HOST: database
+
+  api_webserver:
+    depends_on:
+      api:
+        condition: service_healthy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.api.rule=Host(`api.${DOMAIN}`)
+      - traefik.http.routers.api_webserver.rule=Host(`api.${DOMAIN}`)
+
+  api_cron:
+    extends: api
+    healthcheck:
+      test: [ "NONE" ]
+    depends_on:
+      api:
+        condition: service_healthy
