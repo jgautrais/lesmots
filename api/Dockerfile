@@ -67,7 +67,7 @@ FROM api-base AS api-cron-base
 
 USER root
 
-RUN apk --update --no-cache add logrotate moreutils
+RUN apk add logrotate moreutils
 
 COPY docker/cron/crontasks /etc/crontabs/www-data
 COPY docker/cron/logrotate-cron.conf /etc/logrotate.d/cron
@@ -124,7 +124,7 @@ RUN touch /static-logs/error.log
 ADD docker/nginx/production/conf.d-default.conf /etc/nginx/conf.d/default.conf
 ADD docker/nginx/production/nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=backend-production /var/www/html/public /var/www/html/public
+COPY --from=api-production /var/www/html/public /var/www/html/public
 
 # Uncomment next line if need to create a symbolic link between your public laravel storage and your webserver
 # RUN ls -s /var/www/html/backend_storage/app/public /var/www/html/public/storage
