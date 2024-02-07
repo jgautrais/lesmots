@@ -7,27 +7,29 @@ on:
 jobs:
   build_api:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Log in to ghcr.io
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - uses: docker/metadata-action@v3
         id: metadata
         with:
           images: ghcr.io/${{ github.repository }}
-      - uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: int128/kaniko-action@v1
         with:
           build-args: |
             DOCKER_UID=$DOCKER_UID
             DOCKER_GID=$DOCKER_GID
           push: true
-          tags: ${{ github.head_ref || github.ref_name }}
+          tags: ghcr.io/${{ github.repository }}:${{ github.head_ref || github.ref_name }}
           cache: true
           cache-repository: ghcr.io/${{ github.repository }}/cache
 #  build:
