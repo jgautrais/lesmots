@@ -13,7 +13,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to ghcr.io
-        working-directory: api
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and tag API image
@@ -39,3 +38,11 @@ jobs:
       - name: Push API-cron image to GHCR
         working-directory: api
         run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }}
+
+      - name: Build and tag platform image
+        working-directory: platform
+        run: docker build --build-arg=DOCKER_GID=${{ secrets.DOCKER_GID }} --build-arg=DOCKER_UID=${{ secrets.DOCKER_UID }} --target platform-webserver-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-platform:${{ github.head_ref || github.ref_name }} -f Dockerfile .
+
+      - name: Push platform image to GHCR
+        working-directory: platform
+        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-platform:${{ github.head_ref || github.ref_name }}

@@ -1,9 +1,7 @@
 services:
   platform_webserver:
-    image: // From CI
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-platform:dev
     restart: always
-    environment:
-      APP_NAME: ${APP_NAME}
     volumes:
       - platform_webserver_logs:/static-logs
     labels:
