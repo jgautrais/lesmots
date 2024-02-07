@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'regex' => [
+        'date_format' => '^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$',
+    ],
 ];

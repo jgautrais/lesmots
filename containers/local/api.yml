@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: ../api
+      target: api-local
+      args:
+        DOCKER_UID: ${DOCKER_UID-1000}
+        DOCKER_GID: ${DOCKER_GID-1000}
+    volumes:
+      - ../api:/var/www/html/:delegated
+    environment:
+      PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
+
+  api_webserver:
+    build:
+      context: ../api
+      target: webserver-local
+    volumes:
+      - ../api:/var/www/html/:delegated
+    labels:
+      - traefik.http.routers.api_webserver.tls=true
+
+  api_cron:
+    extends: api
+    build:
+      context: ../api
+      target: api-cron-local
+

@@ -1,0 +1,27 @@
+services:
+  api:
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}:dev
+    environment:
+      TEMPLATE_PHP_INI: production
+      SESSION_SECURE_COOKIE: 1
+      APP_KEY: ${APP_KEY}
+    volumes:
+      - api_storage:/var/www/html/storage
+
+  api_webserver:
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-cron:dev
+    restart: always
+    volumes:
+      - backend_webserver_logs:/static-logs
+      # Next line is needed only if you use a symbolic link in backend dockerfile
+      # - backend_storage:/var/www/html/backend_webserver
+    labels:
+      - traefik.http.routers.api_webserver.entrypoints=websecure
+      - traefik.http.routers.api_webserver.tls.certresolver=httpsresolver
+
+  api_cron:
+    extends: api
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-cron:dev
+
+volumes:
+  api_storage

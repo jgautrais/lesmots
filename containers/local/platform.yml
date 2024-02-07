@@ -1,0 +1,14 @@
+services:
+  platform:
+    environment:
+      APP_NAME: ${APP_NAME}
+    build:
+      context: ../platform
+      target: platform-local
+    volumes:
+      - ../platform:/app:delegated
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.platform.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.platform.tls=true
+

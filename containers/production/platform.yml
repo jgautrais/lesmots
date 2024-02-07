@@ -1,0 +1,14 @@
+services:
+  platform_webserver:
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-platform:dev
+    restart: always
+    volumes:
+      - platform_webserver_logs:/static-logs
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.platform_webserver.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.platform_webserver.entrypoints=websecure
+      - traefik.http.routers.platform_webserver.tls.certresolver=httpsresolver
+
+volumes:
+  platform_webserver_logs:

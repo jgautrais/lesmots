@@ -1,8 +1,13 @@
 services:
   api:
-    image: thecodingmachine/php:8.2-v4-apache-node18
-    volumes:
-      - ../api:/var/www/html/:delegated
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "netstat -an | grep :9000 || exit 1" ]
+      interval: 6s
+      timeout: 6s
+      retries: 40
     environment:
       # PHP EXTENSIONS
       PHP_EXTENSION_GD: 1
@@ -14,15 +19,30 @@ services:
       APP_DEBUG: ${DEBUG}
       APP_URL: ${HTTP_PROTOCOL}://api.${DOMAIN}
       HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      # API Session Authentication
+      SANCTUM_STATEFUL_DOMAINS: ${DOMAIN}
+      SESSION_DOMAIN: .${DOMAIN}
+      SESSION_SECURE_COOKIE: 0 # Set 1 for production environment
+      # FrontEnd
+      ALLOWED_ORIGINS: ${HTTP_PROTOCOL}://${DOMAIN}
       # DATABASE
       DB_DATABASE: ${DATABASE_NAME}
       DB_USERNAME: ${DATABASE_USER}
       DB_PASSWORD: ${DATABASE_PASSWORD}
       DB_HOST: database
+
+  api_webserver:
+    depends_on:
+      api:
+        condition: service_healthy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.backend.rule=Host(`api.${DOMAIN}`)
-    depends_on:
-      database:
-        condition: service_healthy
+      - traefik.http.routers.api_webserver.rule=Host(`api.${DOMAIN}`)
 
+  api_cron:
+    extends: api
+    healthcheck:
+      test: [ "NONE" ]
+    depends_on:
+      api:
+        condition: service_healthy
