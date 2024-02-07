@@ -7,9 +7,6 @@ on:
 jobs:
   build_api:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: api
 
     steps:
       - name: Checkout code
@@ -25,6 +22,7 @@ jobs:
 
       - uses: int128/kaniko-action@v1
         with:
+          file: api/Dockerfile
           build-args: |
             DOCKER_UID=$DOCKER_UID
             DOCKER_GID=$DOCKER_GID
