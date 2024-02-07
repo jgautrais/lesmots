@@ -22,7 +22,8 @@ jobs:
 
       - uses: int128/kaniko-action@v1
         with:
-          file: api/Dockerfile
+          context: ./api
+          file: Dockerfile
           build-args: |
             DOCKER_UID=$DOCKER_UID
             DOCKER_GID=$DOCKER_GID
