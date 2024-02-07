@@ -47,7 +47,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}-webserver/cache
+          cache-repository: ghcr.io/${{ github.repository }}/cache
 
   build_api_cron:
     runs-on: ubuntu-latest
@@ -69,7 +69,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}-cron/cache
+          cache-repository: ghcr.io/${{ github.repository }}/cache
 
   build_platform:
     runs-on: ubuntu-latest
@@ -91,34 +91,4 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}-platform:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}-platform/cache
-
-
-#  build:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#
-#      - name: Build and tag API-webserver image
-#        working-directory: api
-#        run: docker build --build-arg=DOCKER_GID=${{ secrets.DOCKER_GID }} --build-arg=DOCKER_UID=${{ secrets.DOCKER_UID }} --target webserver-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }} -f Dockerfile .
-#
-#      - name: Push API-webserver image to GHCR
-#        working-directory: api
-#        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }}
-#
-#      - name: Build and tag API-cron image
-#        working-directory: api
-#        run: docker build --build-arg=DOCKER_GID=${{ secrets.DOCKER_GID }} --build-arg=DOCKER_UID=${{ secrets.DOCKER_UID }} --target api-cron-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }} -f Dockerfile .
-#
-#      - name: Push API-cron image to GHCR
-#        working-directory: api
-#        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }}
-#
-#      - name: Build and tag platform image
-#        working-directory: platform
-#        run: docker build --build-arg=DOCKER_GID=${{ secrets.DOCKER_GID }} --build-arg=DOCKER_UID=${{ secrets.DOCKER_UID }} --target platform-webserver-production -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-platform:${{ github.head_ref || github.ref_name }} -f Dockerfile .
-#
-#      - name: Push platform image to GHCR
-#        working-directory: platform
-#        run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-platform:${{ github.head_ref || github.ref_name }}
+          cache-repository: ghcr.io/${{ github.repository }}/cache
