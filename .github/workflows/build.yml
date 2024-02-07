@@ -13,21 +13,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Log in to ghcr.io
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Build and tag API image
-        working-directory: api
-        run: |
-          kaniko-project/executor \
-            --context=./ \
-            --cache-repo=ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/cache \
-            --cache=true
-            --build-arg=DOCKER_UID=$DOCKER_UID
-            --build-arg=DOCKER_GID=$DOCKER_GID
-            --target=api-production
-            --dockerfile=Dockerfile \
-            --destination=ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ github.head_ref || github.ref_name }} \
+      - uses: docker/metadata-action@v3
+        id: metadata
+        with:
+          images: ghcr.io/${{ github.repository }}
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: int128/kaniko-action@v1
+        with:
+          build-args: |
+            DOCKER_UID=$DOCKER_UID
+            DOCKER_GID=$DOCKER_GID
+          push: true
+          tags: ${{ github.head_ref || github.ref_name }}
+          cache: true
+          cache-repository: ghcr.io/${{ github.repository }}/cache
 #  build:
 #    runs-on: ubuntu-latest
 #
