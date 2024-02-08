@@ -1,6 +1,12 @@
 services:
   platform_webserver:
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-platform:dev
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-platform:main
+    environment:
+      ENV: ${ENV}
+      HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      DOMAIN: ${DOMAIN}
+      APP_NAME: ${APP_NAME}
+      NEXT_PUBLIC_API_BASE_URL: ${HTTP_PROTOCOL}://api.${DOMAIN}
     restart: always
     volumes:
       - platform_webserver_logs:/static-logs

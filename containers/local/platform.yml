@@ -1,7 +1,11 @@
 services:
   platform:
     environment:
+      ENV: ${ENV}
+      HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      DOMAIN: ${DOMAIN}
       APP_NAME: ${APP_NAME}
+      NEXT_PUBLIC_API_BASE_URL: ${HTTP_PROTOCOL}://api.${DOMAIN}
     build:
       context: ../platform
       target: platform-local
