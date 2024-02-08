@@ -1,6 +1,6 @@
 name: Analyse API
 on:
-  pull_request:
+  push:
     branches:
       - dev
 jobs:
