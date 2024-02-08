@@ -59,4 +59,15 @@ RUN touch /static-logs/error.log
 
 ADD docker/nginx/production/nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=builder /app/dist /app
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
