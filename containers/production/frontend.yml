@@ -1,6 +1,6 @@
 services:
   lesmots_frontend_webserver:
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-frontend-webserver-production:main
+    image: ${REGISTRY_ADDRESS}lesmots-frontend-webserver-production:main
     restart: always
     volumes:
       - lesmots_frontend_webserver_logs:/static-logs
