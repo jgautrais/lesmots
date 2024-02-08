@@ -18,10 +18,10 @@ jobs:
           eval $(ssh-agent -s)
           ssh-add <(echo "${{secrets.SSH_PRIVATE_KEY}}")
           ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "echo '${{ secrets.GHCR_TOKEN }}' | docker login ghcr.io -u ${{ github.actor }} --password-stdin"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}:main"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-webserver:main"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-cron:main"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-platform:main"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend:main"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend_webserver:main"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend_cron:main"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-frontend-webserver-production:main"
           ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker compose down"
           scp docker-compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/docker-compose.yml"
           scp -pqr containers/* "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/containers/"

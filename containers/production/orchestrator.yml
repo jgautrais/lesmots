@@ -15,7 +15,6 @@ services:
       - --certificatesresolvers.httpsresolver.acme.caserver=${LETS_ENCRYPT_SERVER}
       - --certificatesresolvers.httpsresolver.acme.email=${ACME_EMAIL}
       - --certificatesresolvers.httpsresolver.acme.storage=/letsencrypt/acme.json
-
     volumes:
       - letsencrypt_volume:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro

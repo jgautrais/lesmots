@@ -1,0 +1,39 @@
+services:
+  lesmots_backend:
+    depends_on:
+      lesmots_database:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "netstat -an | grep :9000 || exit 1" ]
+      interval: 6s
+      timeout: 6s
+      retries: 40
+    environment:
+      # LARAVEL SPECIFICS
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${COMPOSE_PROFILES}
+      APP_DEBUG: ${DEBUG}
+      APP_URL: ${HTTP_PROTOCOL}://${DOMAIN}
+      HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      SANCTUM_STATEFUL_DOMAINS: ${SANCTUM_STATEFUL_DOMAINS}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      SESSION_DOMAIN: .${DOMAIN}
+      # DATABASE
+      DB_DATABASE: ${DATABASE_NAME}
+      DB_USERNAME: ${DATABASE_USER}
+      DB_PASSWORD: ${DATABASE_PASSWORD}
+      DB_HOST: lesmots_database
+
+  lesmots_backend_webserver:
+    depends_on:
+      lesmots_backend:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.lesmots_backend_webserver.rule=Host(`backend.${DOMAIN}`)
+
+  lesmots_backend_cron:
+    extends: lesmots_backend
+    depends_on:
+      lesmots_backend:
+        condition: service_healthy

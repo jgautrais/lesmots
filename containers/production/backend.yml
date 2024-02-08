@@ -1,0 +1,28 @@
+services:
+  lesmots_backend:
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-backend:main
+    restart: always
+    environment:
+      TEMPLATE_PHP_INI: production
+      SESSION_SECURE_COOKIE: 1
+      APP_KEY: ${APP_KEY}
+    volumes:
+      - lesmots_backend_storage:/var/www/html/storage
+
+  lesmots_backend_webserver:
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-backend_webserver:main
+    restart: always
+    volumes:
+      - lesmots_backend_webserver_logs:/static-logs
+    labels:
+      - traefik.http.routers.lesmots_backend_webserver.entrypoints=websecure
+      - traefik.http.routers.lesmots_backend_webserver.tls.certresolver=httpsresolver
+
+  lesmots_backend_cron:
+    extends: lesmots_backend
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-backend_cron:main
+    restart: always
+
+volumes:
+  lesmots_backend_storage:
+  lesmots_backend_webserver_logs:

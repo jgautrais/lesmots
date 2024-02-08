@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  build_api:
+  build_backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,17 +17,17 @@ jobs:
 
       - uses: int128/kaniko-action@v1
         with:
-          context: api
+          context: backend
           build-args: |
             DOCKER_UID=${{ secrets.DOCKER_UID }}
             DOCKER_GID=${{ secrets.DOCKER_GID }}
-          target: api-production
+          target: backend-production
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.head_ref || github.ref_name }}
+          tags: ghcr.io/${{ github.repository }}-backend:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}/cache
+          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
 
-  build_api_webserver:
+  build_backend_webserver:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,17 +39,17 @@ jobs:
 
       - uses: int128/kaniko-action@v1
         with:
-          context: api
+          context: backend
           build-args: |
             DOCKER_UID=${{ secrets.DOCKER_UID }}
             DOCKER_GID=${{ secrets.DOCKER_GID }}
           target: webserver-production
           push: true
-          tags: ghcr.io/${{ github.repository }}-webserver:${{ github.head_ref || github.ref_name }}
+          tags: ghcr.io/${{ github.repository }}-backend_webserver:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}/cache
+          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
 
-  build_api_cron:
+  build_backend_cron:
     runs-on: ubuntu-latest
 
     steps:
@@ -61,17 +61,17 @@ jobs:
 
       - uses: int128/kaniko-action@v1
         with:
-          context: api
+          context: backend
           build-args: |
             DOCKER_UID=${{ secrets.DOCKER_UID }}
             DOCKER_GID=${{ secrets.DOCKER_GID }}
-          target: api-cron-production
+          target: backend-cron-production
           push: true
-          tags: ghcr.io/${{ github.repository }}-cron:${{ github.head_ref || github.ref_name }}
+          tags: ghcr.io/${{ github.repository }}-backend_cron:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}/cache
+          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
 
-  build_platform:
+  build_frontend:
     runs-on: ubuntu-latest
 
     steps:
@@ -89,6 +89,6 @@ jobs:
             DOCKER_GID=${{ secrets.DOCKER_GID }}
           target: platform-webserver-production
           push: true
-          tags: ghcr.io/${{ github.repository }}-platform:${{ github.head_ref || github.ref_name }}
+          tags: ghcr.io/${{ github.repository }}-frontend-webserver-production:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}/cache
+          cache-repository: ghcr.io/${{ github.repository }}-frontend/cache

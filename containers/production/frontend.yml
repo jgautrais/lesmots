@@ -1,0 +1,15 @@
+services:
+  lesmots_frontend_webserver:
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-frontend-webserver-production:main
+    restart: always
+    volumes:
+      - lesmots_frontend_webserver_logs:/static-logs
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.lesmots_frontend_webserver.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.lesmots_frontend_webserver.entrypoints=websecure
+      - traefik.http.routers.lesmots_frontend_webserver.tls.certresolver=httpsresolver
+
+volumes:
+  lesmots_frontend_webserver_logs:
+

@@ -1,10 +1,10 @@
 services:
-  database_administration:
-    image: arm64v8/phpmyadmin:latest
-    profiles: ["local", "test"]
+  lesmots_database_administration:
+    image: phpmyadmin/phpmyadmin:5
     environment:
-      PMA_HOSTS: database,database_test
+      PMA_HOSTS: lesmots_database
+    profiles:
+      - local
     labels:
       - traefik.enable=true
-      - traefik.http.routers.database_administration.rule=Host(`pma.${DOMAIN}`)
-      - traefik.http.routers.database_administration.tls=true
+      - traefik.http.routers.lesmots_database_administration.rule=Host(`pma.${DOMAIN}`)
