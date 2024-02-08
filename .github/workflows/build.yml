@@ -83,11 +83,11 @@ jobs:
 
       - uses: int128/kaniko-action@v1
         with:
-          context: platform
+          context: frontend
           build-args: |
             DOCKER_UID=${{ secrets.DOCKER_UID }}
             DOCKER_GID=${{ secrets.DOCKER_GID }}
-          target: platform-webserver-production
+          target: frontend-webserver-production
           push: true
           tags: ghcr.io/${{ github.repository }}-frontend-webserver-production:${{ github.head_ref || github.ref_name }}
           cache: true
