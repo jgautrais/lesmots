@@ -1,6 +1,6 @@
 services:
   api:
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}:dev
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}:main
     environment:
       TEMPLATE_PHP_INI: production
       SESSION_SECURE_COOKIE: 1
@@ -9,7 +9,7 @@ services:
       - api_storage:/var/www/html/storage
 
   api_webserver:
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-cron:dev
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-cron:main
     restart: always
     volumes:
       - backend_webserver_logs:/static-logs
@@ -21,7 +21,8 @@ services:
 
   api_cron:
     extends: api
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-cron:dev
+    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-cron:main
 
 volumes:
-  api_storage
+  api_storage:
+  backend_webserver_logs:

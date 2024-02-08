@@ -4,7 +4,6 @@
 include:
   - path:
       - containers/api.yml
-      - containers/platform.yml
       - containers/database.yml
       - containers/database_administration.yml
       - containers/orchestrator.yml
