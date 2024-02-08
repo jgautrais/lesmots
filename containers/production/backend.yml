@@ -1,6 +1,6 @@
 services:
   lesmots_backend:
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-backend:main
+    image: ${REGISTRY_ADDRESS}lesmots-backend:main
     restart: always
     environment:
       TEMPLATE_PHP_INI: production
@@ -10,7 +10,7 @@ services:
       - lesmots_backend_storage:/var/www/html/storage
 
   lesmots_backend_webserver:
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-backend_webserver:main
+    image: ${REGISTRY_ADDRESS}lesmots-backend_webserver:main
     restart: always
     volumes:
       - lesmots_backend_webserver_logs:/static-logs
@@ -20,7 +20,7 @@ services:
 
   lesmots_backend_cron:
     extends: lesmots_backend
-    image: ${REGISTRY_ADDRESS}${PROJECT_NAME}-backend_cron:main
+    image: ${REGISTRY_ADDRESS}lesmots-backend_cron:main
     restart: always
 
 volumes:
