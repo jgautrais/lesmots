@@ -83,8 +83,8 @@ USER root
 
 RUN apk add logrotate moreutils
 
-COPY docker/cron/crontasks /etc/crontabs/www-data
-COPY docker/cron/logrotate-cron.conf /etc/logrotate.d/cron
+COPY --chown=www-data:www-data docker/cron/crontasks /etc/crontabs/www-data
+COPY --chown=www-data:www-data docker/cron/logrotate-cron.conf /etc/logrotate.d/cron
 
 RUN touch /var/log/cron.log
 RUN chown www-data:www-data /var/log/cron.log
