@@ -86,7 +86,7 @@ RUN apk add logrotate moreutils
 COPY docker/cron/crontasks /etc/crontabs/www-data
 COPY docker/cron/logrotate-cron.conf /etc/logrotate.d/cron
 
-RUN crontab /etc/crontabs/www-data
+RUN crontab -u www-data /etc/crontabs/www-data
 RUN touch /var/log/cron.log
 RUN chown www-data:www-data /var/log/cron.log
 RUN chmod 644 /etc/logrotate.d/cron
