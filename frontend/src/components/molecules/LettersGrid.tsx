@@ -79,11 +79,14 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
           </button>
         ))}
       </div>
-      <div className="flex my-10">
-        <button className="block mx-auto" onClick={() => removeLastLetter()}>
+      <div className="flex my-3">
+        <button
+          className="block mx-auto my-7"
+          onClick={() => removeLastLetter()}
+        >
           Effacer
         </button>
-        <button className="block mx-auto" onClick={() => resetWord()}>
+        <button className="block mx-auto my-7" onClick={() => resetWord()}>
           Effacer tout
         </button>
       </div>
