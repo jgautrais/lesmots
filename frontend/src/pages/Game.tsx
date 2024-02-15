@@ -75,7 +75,7 @@ function App() {
   }, [gameData]);
 
   return (
-    <div className="h-screen bg-gray-50 bg-opacity-10">
+    <div className="h-screen bg-gray-50 dark:bg-gray-700 bg-opacity-10 dark:text-gray-50">
       <div className="container mx-auto">
         <NavBar />
         {wordsPool && gameData ? (

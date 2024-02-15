@@ -39,21 +39,21 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
 
   const wordColor = () => {
     if (word.length < 4) {
-      return 'text-gray-300';
+      return 'text-gray-300 dark:text-gray-500';
     }
     if (gameData.foundWords.includes(word)) {
-      return 'text-orange-200';
+      return 'text-orange-300';
     }
     if (gameData.wordsPool.includes(word)) {
-      return 'text-gray-800';
+      return 'text-gray-800 dark:text-gray-100';
     }
-    return 'text-gray-300';
+    return 'text-gray-300 dark:text-gray-500';
   };
 
   return (
     <div className="mx-auto max-w-64 mt-10">
       <button
-        className={`block mx-auto min-h-10 text-3xl mb-4 tracking-widest ${wordColor()}`}
+        className={`block mx-auto min-h-10 text-3xl mb-4 font-bold tracking-widest ${wordColor()}`}
         disabled={!gameData.wordsPool.includes(word)}
         onClick={() => {
           if (
@@ -71,7 +71,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
         {shuffledLetters.map((letter, index) => (
           <button
             key={`${letter}-${index * 2}`}
-            className={`text-center py-4 text-3xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300' : 'text-gray-900'}`}
+            className={`text-center py-4 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}
             onClick={() => addLetter(letter, index)}
             disabled={selectedLettersIndexes.includes(index)}
           >
