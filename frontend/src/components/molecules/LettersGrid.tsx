@@ -54,7 +54,16 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
     <div className="mx-auto max-w-64 mt-10">
       <button
         className={`block mx-auto min-h-10 text-3xl mb-4 tracking-widest ${wordColor()}`}
-        onClick={() => onWordFound(word)}
+        disabled={!gameData.wordsPool.includes(word)}
+        onClick={() => {
+          if (
+            gameData.wordsPool.includes(word) &&
+            !gameData.foundWords.includes(word)
+          ) {
+            return onWordFound(word);
+          }
+          return null;
+        }}
       >
         {word.toUpperCase()}
       </button>
