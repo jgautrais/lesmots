@@ -1,6 +1,5 @@
-import { instance } from '../instance';
+import { instance } from '@/utils/instance';
+import { WordsPool } from '@/types/wordsPool';
 
-const FetchOneByDate = async (date: string) =>
-    instance.get(`api/wordsPool/${date}`).json();
-
-export default FetchOneByDate
+export const fetchOneByDate = async (date: string) =>
+  instance.get(`api/wordsPool/${date}`).json<WordsPool>();
