@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Game, NotFound } from '@/pages';
-import MainRouter from '@/components/organisms/MainRouter';
+import { MainRouter } from '@/components/organisms';
 
 const router = createBrowserRouter([
   {

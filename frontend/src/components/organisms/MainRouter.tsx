@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import {
-  QueryCache,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { QueryCache, QueryClient } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { isApiStatusErrors } from '@/types/common';
@@ -31,11 +29,18 @@ function MainRouter() {
     })
   );
 
+  const persister = createSyncStoragePersister({
+    storage: window.localStorage,
+  });
+
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister }}
+    >
       <Outlet />
       <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   );
 }
 
