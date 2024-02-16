@@ -1,2 +1,2 @@
-export { default as Game } from './Game';
+export { default as Today } from './Today';
 export { default as NotFound } from './NotFound';

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Game, NotFound } from '@/pages';
+import { Today, NotFound } from '@/pages';
 import { MainRouter } from '@/components/organisms';
 
 const router = createBrowserRouter([
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Game />,
+        element: <Today />,
       },
     ],
   },
