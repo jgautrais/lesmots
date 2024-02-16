@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import { WordsPool, GameData } from '@/types/wordsPool';
+import { DeleteIcon, EraseIcon } from '@/components/atoms';
 
 type Props = PropsWithChildren<{
   wordsPool: WordsPool;
@@ -42,7 +43,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
       return 'text-gray-300 dark:text-gray-500';
     }
     if (gameData.foundWords.includes(word)) {
-      return 'text-orange-300';
+      return 'text-teal-400 dark:text-teal-300';
     }
     if (gameData.wordsPool.includes(word)) {
       return 'text-gray-800 dark:text-gray-100';
@@ -51,9 +52,9 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-64 mt-10">
+    <div className="mx-auto max-w-64 mt-8">
       <button
-        className={`block mx-auto min-h-10 text-3xl mb-4 font-bold tracking-widest ${wordColor()}`}
+        className={`block mx-auto min-h-16 align-middle text-3xl mb-2 font-bold tracking-widest ${wordColor()}`}
         disabled={!gameData.wordsPool.includes(word)}
         onClick={() => {
           if (
@@ -65,13 +66,13 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
           return null;
         }}
       >
-        {word.toUpperCase()}
+        &nbsp;{word.toUpperCase()}&nbsp;
       </button>
       <div className="grid grid-cols-3 gap-2">
         {shuffledLetters.map((letter, index) => (
           <button
             key={`${letter}-${index * 2}`}
-            className={`text-center py-4 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}
+            className={`text-center min-h-16 my-1 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}
             onClick={() => addLetter(letter, index)}
             disabled={selectedLettersIndexes.includes(index)}
           >
@@ -79,15 +80,26 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
           </button>
         ))}
       </div>
-      <div className="flex my-3">
+      <div className="flex mt-3">
         <button
-          className="block mx-auto my-7"
+          className="block mx-auto min-h-16 min-w-24 py-1 align-middle"
           onClick={() => removeLastLetter()}
+          aria-label="Effacer la dernière lettre"
+          disabled={!word.length}
         >
-          Effacer
+          <DeleteIcon
+            className={`mx-auto w-8 h-8 ${word.length ? 'text-gray-800 dark:text-gray-200' : 'text-gray-300 dark:text-gray-500'}`}
+          />
         </button>
-        <button className="block mx-auto my-7" onClick={() => resetWord()}>
-          Effacer tout
+        <button
+          className="block mx-auto min-h-16 min-w-24 py-1 align-middle"
+          onClick={() => resetWord()}
+          aria-label="Effacer le mot"
+          disabled={!word.length}
+        >
+          <EraseIcon
+            className={`mx-auto w-9 h-9 ${word.length ? 'text-gray-800 dark:text-gray-200' : 'text-gray-300 dark:text-gray-500'}`}
+          />
         </button>
       </div>
     </div>
