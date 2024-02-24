@@ -16,6 +16,13 @@ const shuffle = (array: string[]) => {
     .map((a) => a.value);
 };
 
+const slideInDurations = [
+  'animate-slideIn20',
+  'animate-slideIn25',
+  'animate-slideIn35',
+  'animate-slideIn45',
+];
+
 function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
   const [word, setWord] = useState('');
   const [shuffledLetters] = useState(shuffle(wordsPool.letters));
@@ -38,7 +45,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
     setSelectedLettersIndexes([]);
   };
 
-  const wordColor = () => {
+  const wordStyle = () => {
     if (word.length < 4) {
       return 'text-gray-300 dark:text-gray-500';
     }
@@ -46,7 +53,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
       return 'text-teal-400 dark:text-teal-300';
     }
     if (gameData.wordsPool.includes(word)) {
-      return 'text-gray-800 dark:text-gray-100';
+      return 'text-gray-800 dark:text-gray-100 !text-3xl';
     }
     return 'text-gray-300 dark:text-gray-500';
   };
@@ -54,7 +61,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
   return (
     <div className="mx-auto max-w-64 mt-8">
       <button
-        className={`block mx-auto min-h-16 align-middle text-3xl mb-2 font-bold tracking-widest ${wordColor()}`}
+        className={`transition-all ease-out block mx-auto min-h-16 align-middle text-2xl mb-2 font-bold tracking-widest ${wordStyle()}`}
         disabled={!gameData.wordsPool.includes(word)}
         onClick={() => {
           if (
@@ -72,7 +79,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
         {shuffledLetters.map((letter, index) => (
           <button
             key={`${letter}-${index * 2}`}
-            className={`text-center min-h-16 my-1 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}
+            className={`${slideInDurations[Math.round(index % 4)]} transition-all ease-in text-center min-h-16 my-1 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-700 dark:text-gray-100'}`}
             onClick={() => addLetter(letter, index)}
             disabled={selectedLettersIndexes.includes(index)}
           >
