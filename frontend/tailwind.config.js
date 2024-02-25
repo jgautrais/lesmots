@@ -5,8 +5,8 @@ export default {
     extend: {
       keyframes: {
         slideIn: {
-          '0%': { fontSize: 0 },
-          '100%': { fontSize: 'text-4xl' },
+          '0%': { transform: 'scale(.25)' },
+          '100%': { fontSize: 'scale(1)' },
         },
       },
       animation: {

@@ -2,7 +2,11 @@ import { PropsWithChildren, useMemo } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { GameData } from '@/types/wordsPool';
 import { LettersGrid } from '@/components/molecules';
-import { LoadingSpinner } from '@/components/atoms';
+import {
+  FoundWordsNumber,
+  LoadingSpinner,
+  NineLettersFoundWords,
+} from '@/components/atoms';
 import {
   fetchOneByDate,
   generateGameDataFromWordsPool,
@@ -71,24 +75,8 @@ function Game({ day }: Props) {
 
   return wordsPool && gameData ? (
     <>
-      <p className="text-center">
-        <span className="font-bold text-teal-500 dark:text-teal-300">
-          {gameData.foundWords.length}
-        </span>{' '}
-        mot
-        {gameData.foundWords.length > 1 ? 's' : ''} trouvé
-        {gameData.foundWords.length > 1 ? 's ' : ' '}
-        sur <span className="font-bold">{gameData.wordsPool.length}</span>
-      </p>
-      <p className="text-center mt-2">
-        <span
-          className={`${nineLettersFoundWords?.toUpperCase() ? 'font-bold italic' : 'tracking-widest text-gray-600'}`}
-        >
-          {nineLettersFoundWords?.toUpperCase()
-            ? nineLettersFoundWords?.toUpperCase()
-            : '_________'}
-        </span>
-      </p>
+      <FoundWordsNumber gameData={gameData} />
+      <NineLettersFoundWords nineLettersFoundWords={nineLettersFoundWords} />
       <LettersGrid
         wordsPool={wordsPool}
         gameData={gameData}

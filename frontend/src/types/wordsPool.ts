@@ -12,3 +12,6 @@ export const GameDataSchema = z.object({
   wordsPool: z.array(z.string()),
 });
 export type GameData = z.infer<typeof GameDataSchema>;
+
+export const SortedWordsPoolSchema = z.record(z.string(), z.array(z.string()));
+export type SortedWordsPool = z.infer<typeof SortedWordsPoolSchema>;

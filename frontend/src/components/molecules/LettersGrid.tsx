@@ -53,7 +53,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
       return 'text-teal-400 dark:text-teal-300';
     }
     if (gameData.wordsPool.includes(word)) {
-      return 'text-gray-800 dark:text-gray-100 !text-3xl';
+      return 'text-gray-800 dark:text-gray-100 scale-125';
     }
     return 'text-gray-300 dark:text-gray-500';
   };
@@ -79,7 +79,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
         {shuffledLetters.map((letter, index) => (
           <button
             key={`${letter}-${index * 2}`}
-            className={`${slideInDurations[Math.round(index % 4)]} transition-all ease-in text-center min-h-16 my-1 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-700 dark:text-gray-100'}`}
+            className={`${slideInDurations[index % 4]} transition-all ease-in text-center min-h-16 my-1 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-700 dark:text-gray-100'}`}
             onClick={() => addLetter(letter, index)}
             disabled={selectedLettersIndexes.includes(index)}
           >
