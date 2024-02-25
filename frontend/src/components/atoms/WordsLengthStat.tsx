@@ -36,7 +36,7 @@ function WordsLengthStat({ wordLengthEntry, wordsPoolSortedByLength }: Props) {
           </span>
         </p>
       </div>
-      <p className="text-xs">
+      <p className="text-xs mt-1 ms-1">
         {words.map((word, index) => (
           <>
             <span
@@ -45,7 +45,7 @@ function WordsLengthStat({ wordLengthEntry, wordsPoolSortedByLength }: Props) {
             >
               {word}
             </span>
-            ,&#32;
+            {index !== words.length - 1 ? ', ' : ''}
           </>
         ))}
       </p>
