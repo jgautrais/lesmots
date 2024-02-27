@@ -47,7 +47,7 @@ function WordsLengthStat({ wordLengthEntry, wordsPoolSortedByLength }: Props) {
               >
                 {word}
               </span>
-              {index !== words.length - 1 ? ', ' : ''}
+              {index !== words.length - 1 ? ' ' : ''}
             </React.Fragment>
           ))}
       </p>
