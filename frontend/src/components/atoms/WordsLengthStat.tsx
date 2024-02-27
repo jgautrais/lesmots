@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { SortedWordsPool } from '@/types/wordsPool';
 
 type Props = PropsWithChildren<{
@@ -16,7 +16,7 @@ const slideInDurations = [
 function WordsLengthStat({ wordLengthEntry, wordsPoolSortedByLength }: Props) {
   const [length, words] = wordLengthEntry;
   return (
-    <div className="mb-3">
+    <div className="mb-4 border-t pt-1 dark:border-gray-500">
       <div
         className={`${slideInDurations[+length % 4]} flex content-center transition-all ease-out`}
       >
@@ -37,17 +37,19 @@ function WordsLengthStat({ wordLengthEntry, wordsPoolSortedByLength }: Props) {
         </p>
       </div>
       <p className="text-xs mt-1 ms-1">
-        {words.map((word, index) => (
-          <>
-            <span
-              key={word}
-              className={`${slideInDurations[+index % 4]} transition-all ease-out inline-block`}
-            >
-              {word}
-            </span>
-            {index !== words.length - 1 ? ', ' : ''}
-          </>
-        ))}
+        {words
+          .sort((a, b) => a.localeCompare(b))
+          .map((word, index) => (
+            <React.Fragment key={word}>
+              <span
+                key={word}
+                className={`${slideInDurations[+index % 4]} transition-all ease-out inline-block`}
+              >
+                {word}
+              </span>
+              {index !== words.length - 1 ? ', ' : ''}
+            </React.Fragment>
+          ))}
       </p>
     </div>
   );
