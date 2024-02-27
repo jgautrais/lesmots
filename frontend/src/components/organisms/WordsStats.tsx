@@ -7,6 +7,7 @@ import {
 import {
   FoundWordsNumber,
   LoadingSpinner,
+  NineLettersFoundWords,
   WordsLengthStat,
 } from '@/components/atoms';
 import { SortedWordsPool } from '@/types/wordsPool';
@@ -67,10 +68,17 @@ function WordsStats({ day }: Props) {
     return gameData ? sortWordsByLength(gameData.foundWords) : undefined;
   }, [gameData]);
 
+  const nineLettersFoundWords = useMemo(() => {
+    return gameData?.foundWords.length
+      ? gameData.foundWords.filter((foundWord) => foundWord.length === 9)[0]
+      : undefined;
+  }, [gameData]);
+
   return wordsPool && gameData ? (
     <>
       <FoundWordsNumber gameData={gameData} />
-      <div className="mx-auto max-w-64 mt-10">
+      <NineLettersFoundWords nineLettersFoundWords={nineLettersFoundWords} />
+      <div className="mx-auto max-w-64 mt-6">
         {foundWordsSortedByLength && wordsPoolSortedByLength
           ? Object.entries(foundWordsSortedByLength).map((entry) => (
               <WordsLengthStat

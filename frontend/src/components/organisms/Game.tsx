@@ -1,12 +1,8 @@
-import { PropsWithChildren, useMemo } from 'react';
+import { PropsWithChildren } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { GameData } from '@/types/wordsPool';
 import { LettersGrid } from '@/components/molecules';
-import {
-  FoundWordsNumber,
-  LoadingSpinner,
-  NineLettersFoundWords,
-} from '@/components/atoms';
+import { FoundWordsNumber, LoadingSpinner } from '@/components/atoms';
 import {
   fetchOneByDate,
   generateGameDataFromWordsPool,
@@ -65,18 +61,9 @@ function Game({ day }: Props) {
     },
   });
 
-  const nineLettersFoundWords = useMemo(() => {
-    return gameData
-      ? gameData.foundWords
-          .filter((foundWord) => foundWord.length === 9)
-          .join(', ')
-      : undefined;
-  }, [gameData]);
-
   return wordsPool && gameData ? (
     <>
       <FoundWordsNumber gameData={gameData} />
-      <NineLettersFoundWords nineLettersFoundWords={nineLettersFoundWords} />
       <LettersGrid
         wordsPool={wordsPool}
         gameData={gameData}

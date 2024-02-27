@@ -45,7 +45,20 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
     setSelectedLettersIndexes([]);
   };
 
-  const wordStyle = () => {
+  const foundWordButtonStyle = () => {
+    if (word.length < 4) {
+      return 'bg-transparent';
+    }
+    if (gameData.foundWords.includes(word)) {
+      return 'bg-transparent';
+    }
+    if (gameData.wordsPool.includes(word)) {
+      return 'border-teal-200 dark:border-teal-500 bg-teal-50 dark:bg-teal-900';
+    }
+    return 'bg-transparent';
+  };
+
+  const foundWordStyle = () => {
     if (word.length < 4) {
       return 'text-gray-300 dark:text-gray-500';
     }
@@ -61,7 +74,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
   return (
     <div className="mx-auto max-w-64 mt-8">
       <button
-        className={`transition-all ease-out block mx-auto min-h-16 align-middle text-2xl mb-2 font-bold tracking-widest ${wordStyle()}`}
+        className={`transition-all ease-out block mx-auto min-h-16 align-middle text-2xl mb-4 font-bold tracking-widest min-w-full rounded border-2 border-gray-50 dark:border-gray-600 ${foundWordButtonStyle()}`}
         disabled={!gameData.wordsPool.includes(word)}
         onClick={() => {
           if (
@@ -73,13 +86,15 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
           return null;
         }}
       >
-        &nbsp;{word.toUpperCase()}&nbsp;
+        <p className={`transition-all ease-out ${foundWordStyle()}`}>
+          &nbsp;{word.toUpperCase()}&nbsp;
+        </p>
       </button>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-4">
         {shuffledLetters.map((letter, index) => (
           <button
             key={`${letter}-${index * 2}`}
-            className={`${slideInDurations[index % 4]} transition-all ease-in text-center min-h-16 my-1 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-700 dark:text-gray-100'}`}
+            className={`${slideInDurations[index % 4]} transition-all ease-in border rounded border-gray-200 disabled:border-gray-100 dark:border-gray-500 disabled:dark:border-gray-600 text-center min-h-16 my-1 text-4xl font-bold ${selectedLettersIndexes.includes(index) ? 'text-gray-300 dark:text-gray-500' : 'text-gray-700 dark:text-gray-100'}`}
             onClick={() => addLetter(letter, index)}
             disabled={selectedLettersIndexes.includes(index)}
           >
@@ -87,9 +102,9 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
           </button>
         ))}
       </div>
-      <div className="flex mt-3">
+      <div className="flex mt-5">
         <button
-          className="block mx-auto min-h-16 min-w-24 py-1 align-middle"
+          className="block mx-auto min-h-16 min-w-24 py-1 align-middle bg-gray-50 dark:bg-gray-600 rounded"
           onClick={() => removeLastLetter()}
           aria-label="Effacer la dernière lettre"
           disabled={!word.length}
@@ -99,7 +114,7 @@ function LettersGrid({ wordsPool, gameData, onWordFound }: Props) {
           />
         </button>
         <button
-          className="block mx-auto min-h-16 min-w-24 py-1 align-middle"
+          className="block mx-auto min-h-16 min-w-24 py-1 align-middle bg-gray-50 dark:bg-gray-600 rounded"
           onClick={() => resetWord()}
           aria-label="Effacer le mot"
           disabled={!word.length}
