@@ -5,8 +5,9 @@ include:
       - containers/database_administration.yml
       - containers/backend.yml
       - containers/orchestrator.yml
-      - containers/${COMPOSE_PROFILES}/backend.yml
-      - containers/${COMPOSE_PROFILES}/frontend.yml
-      - containers/${COMPOSE_PROFILES}/orchestrator.yml
+      - containers/mailing.yml
+      - containers/${ENV}/backend.yml
+      - containers/${ENV}/frontend.yml
+      - containers/${ENV}/orchestrator.yml
     env_file:
       - .env

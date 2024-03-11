@@ -1,8 +1,5 @@
 services:
-  lesmots_backend:
-    depends_on:
-      lesmots_database:
-        condition: service_healthy
+  backend:
     healthcheck:
       test: [ "CMD-SHELL", "netstat -an | grep :9000 || exit 1" ]
       interval: 6s
@@ -22,18 +19,28 @@ services:
       DB_DATABASE: ${DATABASE_NAME}
       DB_USERNAME: ${DATABASE_USER}
       DB_PASSWORD: ${DATABASE_PASSWORD}
-      DB_HOST: lesmots_database
+      DB_HOST: database
+      # EMAILING
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_MAILER: ${MAIL_MAILER}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+      MAIL_VERIFY_PEER: ${MAIL_VERIFY_PEER}
 
-  lesmots_backend_webserver:
+  backend_webserver:
     depends_on:
-      lesmots_backend:
+      backend:
         condition: service_healthy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.lesmots_backend_webserver.rule=Host(`backend.${DOMAIN}`)
+      - traefik.http.routers.backend_webserver.rule=Host(`backend.${DOMAIN}`)
 
-  lesmots_backend_cron:
-    extends: lesmots_backend
+  backend_cron:
+    extends: backend
     depends_on:
-      lesmots_backend:
+      backend:
         condition: service_healthy

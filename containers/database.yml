@@ -1,5 +1,5 @@
 services:
-  lesmots_database:
+  database:
     image: mysql:8.0
     volumes:
       - lesmots_database_volume:/var/lib/mysql

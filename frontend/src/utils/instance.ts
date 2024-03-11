@@ -9,7 +9,9 @@ export const instance = ky.extend({
           .find((row) => row.startsWith('XSRF-TOKEN='))
           ?.split('=')[1];
 
-        request.headers.set('X-XSRF-TOKEN', token ?? '');
+        if (token) {
+          request.headers.set('X-XSRF-TOKEN', decodeURIComponent(token));
+        }
       },
     ],
   },

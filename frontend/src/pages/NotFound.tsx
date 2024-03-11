@@ -1,12 +1,13 @@
-import { NavBar } from '@/components/molecules';
+import BaseTemplate from '@/components/template/PageTemplate';
 
 function NotFound() {
   return (
-    <div className="container mx-auto text-center">
-      <NavBar />
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-    </div>
+    <BaseTemplate>
+      <>
+        <h1>Oops!</h1>
+        <p>Sorry, an unexpected error has occurred.</p>
+      </>
+    </BaseTemplate>
   );
 }
 

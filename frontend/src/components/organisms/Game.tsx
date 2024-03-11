@@ -18,15 +18,15 @@ function Game({ day }: Props) {
   const { data: wordsPool } = useQuery({
     queryKey: ['wordsPool', day],
     queryFn: () => fetchOneByDate(day),
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: 1000 * 60 * 60 * 24, // 24h
+    gcTime: 1000 * 60 * 60 * 24, // 24h,
   });
 
   const { data: gameData } = useQuery({
     queryKey: ['gameData', day, wordsPool],
     queryFn: () => generateGameDataFromWordsPool(wordsPool),
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: 1000 * 60 * 60 * 24, // 24h,
+    gcTime: 1000 * 60 * 60 * 24, // 24h,
     enabled: !!wordsPool,
   });
 

@@ -36,7 +36,7 @@ function WordsLengthStat({ wordLengthEntry, wordsPoolSortedByLength }: Props) {
           </span>
         </p>
       </div>
-      <p className="text-xs mt-1 ms-1">
+      <p className="text-xs mt-1 ms-1 text-left">
         {words
           .sort((a, b) => a.localeCompare(b))
           .map((word, index) => (

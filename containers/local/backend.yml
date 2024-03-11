@@ -1,5 +1,5 @@
 services:
-  lesmots_backend:
+  backend:
     build:
       context: ../backend
       target: backend-local
@@ -11,15 +11,15 @@ services:
     environment:
       PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
 
-  lesmots_backend_webserver:
+  backend_webserver:
     build:
       context: ../backend
       target: webserver-local
     volumes:
       - ../backend:/var/www/html/:delegated
 
-  lesmots_backend_cron:
-    extends: lesmots_backend
+  backend_cron:
+    extends: backend
     build:
       context: ../backend
       target: backend-cron-local
