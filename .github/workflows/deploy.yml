@@ -23,7 +23,7 @@ jobs:
           ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend_cron:main"
           ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-frontend-webserver-production:main"
           ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu && docker compose down"
-          scp docker-compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/docker-compose.yml"
+          scp docker-compose_prod.yml "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/docker-compose.yml"
           scp -pqr containers/* "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/containers/"
           ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu && docker compose up -d"
 
