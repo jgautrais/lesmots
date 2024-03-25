@@ -4,9 +4,8 @@ include:
       - containers/database.yml
       - containers/database_administration.yml
       - containers/backend.yml
-      - containers/orchestrator.yml
-      - containers/${COMPOSE_PROFILES}/backend.yml
-      - containers/${COMPOSE_PROFILES}/frontend.yml
-      - containers/${COMPOSE_PROFILES}/orchestrator.yml
+      - containers/${ENV:?err}/backend.yml
+      - containers/${ENV:?err}/frontend.yml
+      - containers/${ENV:?err}/orchestrator.yml
     env_file:
       - .env
