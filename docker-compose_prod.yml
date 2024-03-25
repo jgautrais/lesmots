@@ -1,0 +1,10 @@
+# Containers are managed inside the 'containers' folder
+include:
+  - path:
+      - lesmots/containers/database.yml
+      - lesmots/containers/database_administration.yml
+      - lesmots/containers/backend.yml
+      - lesmots/containers/${ENV:?err}/backend.yml
+      - lesmots/containers/${ENV:?err}/frontend.yml
+    env_file:
+      - lesmots/.env
