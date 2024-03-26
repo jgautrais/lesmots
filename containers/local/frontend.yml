@@ -1,5 +1,5 @@
 services:
-  frontend:
+  lesmots_frontend:
     build:
       context: ../frontend
       target: frontend-local
@@ -7,4 +7,4 @@ services:
       - ../frontend:/app:delegated
     labels:
       - traefik.enable=true
-      - traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.lesmots_frontend.rule=Host(`${DOMAIN}`)

@@ -1,5 +1,5 @@
 services:
-  database_administration:
+  lesmots_database_administration:
     image: phpmyadmin/phpmyadmin:5
     environment:
       PMA_HOSTS: database

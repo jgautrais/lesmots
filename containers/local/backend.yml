@@ -1,5 +1,5 @@
 services:
-  backend:
+  lesmots_backend:
     build:
       context: ../backend
       target: backend-local
@@ -14,17 +14,17 @@ services:
       SESSION_DOMAIN: .${DOMAIN}
       PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
 
-  backend_webserver:
+  lesmots_backend_webserver:
     build:
       context: ../backend
       target: webserver-local
     labels:
-      - traefik.http.routers.backend_webserver.rule=Host(`backend.${DOMAIN}`)
+      - traefik.http.routers.lesmots_backend_webserver.rule=Host(`backend.${DOMAIN}`)
     volumes:
       - ../backend:/var/www/html/:delegated
 
-  backend_cron:
-    extends: backend
+  lesmots_backend_cron:
+    extends: lesmots_backend
     build:
       context: ../backend
       target: backend-cron-local
