@@ -4,6 +4,7 @@ include:
       - ${LESMOTS_PATH}containers/database.yml
       - ${LESMOTS_PATH}containers/database_administration.yml
       - ${LESMOTS_PATH}containers/backend.yml
+      - ${LESMOTS_PATH}containers/mailing.yml
       - ${LESMOTS_PATH}containers/orchestrator.yml
       - ${LESMOTS_PATH}containers/${ENV}/backend.yml
       - ${LESMOTS_PATH}containers/${ENV}/frontend.yml

@@ -2,9 +2,9 @@ services:
   lesmots_database_administration:
     image: phpmyadmin/phpmyadmin:5
     environment:
-      PMA_HOSTS: database
+      PMA_HOSTS: lesmots_database
     profiles:
       - local
     labels:
       - traefik.enable=true
-      - traefik.http.routers.database_administration.rule=Host(`pma.${DOMAIN}`)
+      - traefik.http.routers.lesmots_database_administration.rule=Host(`pma.${DOMAIN}`)
