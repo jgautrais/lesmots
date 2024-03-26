@@ -10,6 +10,13 @@ services:
       timeout: 6s
       retries: 40
     environment:
+      # LARAVEL SPECIFICS
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${COMPOSE_PROFILES}
+      APP_DEBUG: ${DEBUG}
+      HTTP_PROTOCOL: ${HTTP_PROTOCOL}
+      SANCTUM_STATEFUL_DOMAINS: ${SANCTUM_STATEFUL_DOMAINS}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
       # DATABASE
       DB_DATABASE: ${DATABASE_NAME}
       DB_USERNAME: ${DATABASE_USER}
@@ -30,6 +37,8 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    labels:
+      - traefik.enable=true
 
   backend_cron:
     extends: backend

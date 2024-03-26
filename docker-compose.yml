@@ -1,11 +1,12 @@
 # Containers are managed inside the 'containers' folder
 include:
   - path:
-      - containers/database.yml
-      - containers/database_administration.yml
-      - containers/backend.yml
-      - containers/${ENV:?err}/backend.yml
-      - containers/${ENV:?err}/frontend.yml
-      - containers/${ENV:?err}/orchestrator.yml
+      - ${LESMOTS_PATH}containers/database.yml
+      - ${LESMOTS_PATH}containers/database_administration.yml
+      - ${LESMOTS_PATH}containers/backend.yml
+      - ${LESMOTS_PATH}containers/orchestrator.yml
+      - ${LESMOTS_PATH}containers/${ENV}/backend.yml
+      - ${LESMOTS_PATH}containers/${ENV}/frontend.yml
+      - ${LESMOTS_PATH}containers/${ENV}/orchestrator.yml
     env_file:
-      - .env
+      - ${LESMOTS_PATH}.env
