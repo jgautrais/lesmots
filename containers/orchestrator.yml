@@ -1,5 +1,5 @@
 services:
-  orchestrator:
+  lesmots_orchestrator:
     image: traefik:v2.10
     profiles:
       - local
