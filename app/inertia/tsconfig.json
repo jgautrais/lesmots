@@ -8,6 +8,7 @@
     "paths": {
       "~/*": ["./*"],
     },
+    "plugins": [{ "name": "@vue/typescript-plugin", "languages": ["vue"] }],
   },
   "include": ["./**/*.ts", "./**/*.vue"],
 }

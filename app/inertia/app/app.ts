@@ -1,11 +1,11 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
 
-import '../css/app.css'
-import { createApp, h } from 'vue'
-import type { DefineComponent } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
+import { createInertiaApp } from '@inertiajs/vue3'
+import type { DefineComponent } from 'vue'
+import { createApp, h } from 'vue'
+import '../css/app.css'
 
 const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
 

@@ -11,7 +11,9 @@ defineProps<{
     <span class="font-bold text-teal-500 dark:text-teal-300">
       {{ gameData.foundWords.length }}
     </span>
-    mot{{ gameData.foundWords.length > 1 ? 's' : '' }} trouvé{{ gameData.foundWords.length > 1 ? 's' : '' }}
+    mot{{ gameData.foundWords.length > 1 ? 's' : '' }} trouvé{{
+      gameData.foundWords.length > 1 ? 's' : ''
+    }}
     sur <span class="font-bold">{{ gameData.wordsPool.length }}</span>
   </p>
 </template>

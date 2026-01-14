@@ -1,8 +1,8 @@
+import WordsPool from '#models/words_pool'
+import WordsService from '#services/words_service'
 import { BaseCommand, flags } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 import { DateTime } from 'luxon'
-import WordsPool from '#models/words_pool'
-import WordsService from '#services/words_service'
 
 export default class CreateWordsPool extends BaseCommand {
   static commandName = 'create:words-pool'
@@ -39,7 +39,7 @@ export default class CreateWordsPool extends BaseCommand {
     wordsService.generateWords()
 
     const existingPool = await WordsPool.query()
-      .whereRaw("day::text = ?", [targetDay.toISODate()])
+      .whereRaw('day::text = ?', [targetDay.toISODate()!])
       .first()
 
     if (existingPool) {

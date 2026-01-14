@@ -1,8 +1,8 @@
+import WordsPool from '#models/words_pool'
 import { BaseCommand, flags } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
-import { readFile } from 'node:fs/promises'
-import WordsPool from '#models/words_pool'
 import { DateTime } from 'luxon'
+import { readFile } from 'node:fs/promises'
 
 interface MySQLWordPool {
   id: number
@@ -44,9 +44,7 @@ export default class ImportData extends BaseCommand {
 
       for (const record of data) {
         // Check if already exists
-        const existing = await WordsPool.query()
-          .whereRaw("day::text = ?", [record.day])
-          .first()
+        const existing = await WordsPool.query().whereRaw('day::text = ?', [record.day]).first()
 
         if (existing) {
           skipped++

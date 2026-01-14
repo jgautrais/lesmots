@@ -15,7 +15,7 @@ export default class Scheduler extends BaseCommand {
     this.logger.info('Starting scheduler...')
 
     // Schedule create:words-pool daily at 01:00
-    Cron('0 1 * * *', async () => {
+    new Cron('0 1 * * *', async () => {
       this.logger.info('Running scheduled task: create:words-pool')
       const { default: ace } = await import('@adonisjs/core/services/ace')
       await ace.exec('create:words-pool', [])

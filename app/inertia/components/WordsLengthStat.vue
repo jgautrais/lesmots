@@ -28,7 +28,9 @@ const sortedWords = computed(() => [...words.value].sort((a, b) => a.localeCompa
 <template>
   <div class="mb-4 border-t pt-1 border-gray-200 dark:border-gray-500">
     <div :class="[slideInDurations[+length % 4], 'flex content-center transition-all ease-out']">
-      <p class="shrink-0 font-bold">{{ length }} lettres</p>
+      <p class="shrink-0 font-bold">
+        {{ length }} lettres
+      </p>
       <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-800 self-center ms-2">
         <div
           class="bg-teal-500 h-2.5 rounded-full dark:bg-teal-300"
@@ -43,10 +45,12 @@ const sortedWords = computed(() => [...words.value].sort((a, b) => a.localeCompa
       </p>
     </div>
     <p class="text-xs mt-1 ms-1">
-      <template v-for="(word, index) in sortedWords" :key="word">
+      <template
+        v-for="(word, index) in sortedWords"
+        :key="word"
+      >
         <span :class="[slideInDurations[index % 4], 'transition-all ease-out inline-block']">
-          {{ word }} </span
-        >{{ index !== sortedWords.length - 1 ? ' ' : '' }}
+          {{ word }} </span>{{ index !== sortedWords.length - 1 ? ' ' : '' }}
       </template>
     </p>
   </div>

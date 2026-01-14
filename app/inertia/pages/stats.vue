@@ -13,8 +13,14 @@ defineProps<{
   <Head title="Statistiques" />
   <div class="container mx-auto">
     <NavBar />
-    <WordsStats v-if="wordsPool" :words-pool="wordsPool" />
-    <div v-else class="text-center mt-10 text-gray-500">
+    <WordsStats
+      v-if="wordsPool"
+      :words-pool="wordsPool"
+    />
+    <div
+      v-else
+      class="text-center mt-10 text-gray-500"
+    >
       Aucun jeu disponible pour aujourd'hui
     </div>
     <Link

@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --animate-slideIn20: slideIn 0.20s ease-in-out;
+  --animate-slideIn20: slideIn 0.2s ease-in-out;
   --animate-slideIn25: slideIn 0.25s ease-in-out;
   --animate-slideIn35: slideIn 0.35s ease-in-out;
   --animate-slideIn45: slideIn 0.45s ease-in-out;

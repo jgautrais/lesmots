@@ -1,14 +1,12 @@
-import type { HttpContext } from '@adonisjs/core/http'
 import WordsPool from '#models/words_pool'
+import type { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 
 export default class WordsPoolsController {
   private async getWordsPoolForToday() {
     const today = DateTime.now().toFormat('yyyy-MM-dd')
 
-    const wordsPool = await WordsPool.query()
-      .whereRaw("day::text = ?", [today])
-      .first()
+    const wordsPool = await WordsPool.query().whereRaw('day::text = ?', [today]).first()
 
     if (!wordsPool) {
       return null
