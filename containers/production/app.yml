@@ -1,0 +1,7 @@
+services:
+  lesmots_app:
+    image: ${REGISTRY_ADDRESS}lesmots-app:main
+    restart: always
+    labels:
+      - traefik.http.routers.lesmots_app.entrypoints=websecure
+      - traefik.http.routers.lesmots_app.tls.certresolver=cloudflare

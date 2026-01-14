@@ -1,0 +1,25 @@
+services:
+  lesmots_app:
+    container_name: lesmots_app
+    build:
+      context: ../app
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - HOST=0.0.0.0
+      - PORT=3333
+      - LOG_LEVEL=info
+      - SESSION_DRIVER=cookie
+      - APP_KEY=${APP_KEY}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+    depends_on:
+      lesmots_database:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.lesmots_app.rule=Host(`lesmots.${DOMAIN}`)
+      - traefik.http.services.lesmots_app.loadbalancer.server.port=80

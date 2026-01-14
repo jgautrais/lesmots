@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  build_backend:
+  build_app:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,78 +17,9 @@ jobs:
 
       - uses: int128/kaniko-action@v1
         with:
-          context: backend
-          build-args: |
-            DOCKER_UID=${{ secrets.DOCKER_UID }}
-            DOCKER_GID=${{ secrets.DOCKER_GID }}
-          target: backend-production
+          context: app
+          target: release
           push: true
-          tags: ghcr.io/${{ github.repository }}-backend:${{ github.head_ref || github.ref_name }}
+          tags: ghcr.io/${{ github.repository }}-app:${{ github.head_ref || github.ref_name }}
           cache: true
-          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
-
-  build_backend_webserver:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to ghcr.io
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - uses: int128/kaniko-action@v1
-        with:
-          context: backend
-          build-args: |
-            DOCKER_UID=${{ secrets.DOCKER_UID }}
-            DOCKER_GID=${{ secrets.DOCKER_GID }}
-          target: webserver-production
-          push: true
-          tags: ghcr.io/${{ github.repository }}-backend_webserver:${{ github.head_ref || github.ref_name }}
-          cache: true
-          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
-
-  build_backend_cron:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to ghcr.io
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - uses: int128/kaniko-action@v1
-        with:
-          context: backend
-          build-args: |
-            DOCKER_UID=${{ secrets.DOCKER_UID }}
-            DOCKER_GID=${{ secrets.DOCKER_GID }}
-          target: backend-cron-production
-          push: true
-          tags: ghcr.io/${{ github.repository }}-backend_cron:${{ github.head_ref || github.ref_name }}
-          cache: true
-          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
-
-  build_frontend:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to ghcr.io
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - uses: int128/kaniko-action@v1
-        with:
-          context: frontend
-          build-args: |
-            DOCKER_UID=${{ secrets.DOCKER_UID }}
-            DOCKER_GID=${{ secrets.DOCKER_GID }}
-          target: frontend-webserver-production
-          push: true
-          tags: ghcr.io/${{ github.repository }}-frontend-webserver-production:${{ github.head_ref || github.ref_name }}
-          cache: true
-          cache-repository: ghcr.io/${{ github.repository }}-frontend/cache
+          cache-repository: ghcr.io/${{ github.repository }}-app/cache
