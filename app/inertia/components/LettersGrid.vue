@@ -113,7 +113,7 @@ const handleWordSubmit = () => {
 
     <div class="flex mt-5">
       <button
-        class="block mx-auto min-h-16 min-w-24 py-1 align-middle bg-gray-50 dark:bg-gray-600 rounded"
+        class="touch-manipulation block mx-auto min-h-16 min-w-24 py-1 align-middle bg-gray-50 dark:bg-gray-600 rounded"
         :disabled="!word.length"
         aria-label="Effacer la dernière lettre"
         @click="removeLastLetter"
@@ -126,7 +126,7 @@ const handleWordSubmit = () => {
         />
       </button>
       <button
-        class="block mx-auto min-h-16 min-w-24 py-1 align-middle bg-gray-50 dark:bg-gray-600 rounded"
+        class="touch-manipulation block mx-auto min-h-16 min-w-24 py-1 align-middle bg-gray-50 dark:bg-gray-600 rounded"
         :disabled="!word.length"
         aria-label="Effacer le mot"
         @click="resetWord"
