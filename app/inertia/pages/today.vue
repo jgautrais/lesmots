@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import NavBar from '../components/NavBar.vue'
 import Game from '../components/Game.vue'
 import type { WordsPoolWithDay } from '../types/wordsPool'
+import { isToday } from '../utils/date'
 
-defineProps<{
+const props = defineProps<{
   wordsPool: WordsPoolWithDay | null
 }>()
+
+const detailsUrl = computed(() =>
+  props.wordsPool && !isToday(props.wordsPool.day)
+    ? `/game/${props.wordsPool.day}/details`
+    : '/stats'
+)
 </script>
 
 <template>
@@ -24,7 +32,7 @@ defineProps<{
       Aucun jeu disponible pour aujourd'hui
     </div>
     <Link
-      href="/stats"
+      :href="detailsUrl"
       class="block text-lg font-bold text-center mt-10 py-3 px-6 rounded border border-gray-100 bg-gray-50 dark:bg-gray-600 dark:border-gray-500 w-fit mx-auto mb-5"
     >
       Détails

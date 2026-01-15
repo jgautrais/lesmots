@@ -29,4 +29,54 @@ export default class WordsPoolsController {
     const wordsPool = await this.getWordsPoolForToday()
     return inertia.render('stats', { wordsPool })
   }
+
+  async history({ inertia }: HttpContext) {
+    return inertia.render('history', {})
+  }
+
+  async game({ inertia, params }: HttpContext) {
+    const { day } = params
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+      return inertia.render('today', { wordsPool: null })
+    }
+
+    const wordsPool = await WordsPool.query().whereRaw('day::text = ?', [day]).first()
+
+    if (!wordsPool) {
+      return inertia.render('today', { wordsPool: null })
+    }
+
+    return inertia.render('today', {
+      wordsPool: {
+        day,
+        letters: wordsPool.letters,
+        wordsPool: wordsPool.pool,
+        maxLengthWords: wordsPool.maxLengthWords.split(','),
+      },
+    })
+  }
+
+  async gameDetails({ inertia, params }: HttpContext) {
+    const { day } = params
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+      return inertia.render('game-details', { wordsPool: null })
+    }
+
+    const wordsPool = await WordsPool.query().whereRaw('day::text = ?', [day]).first()
+
+    if (!wordsPool) {
+      return inertia.render('game-details', { wordsPool: null })
+    }
+
+    return inertia.render('game-details', {
+      wordsPool: {
+        day,
+        letters: wordsPool.letters,
+        wordsPool: wordsPool.pool,
+        maxLengthWords: wordsPool.maxLengthWords.split(','),
+      },
+    })
+  }
 }
