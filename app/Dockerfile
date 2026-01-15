@@ -11,9 +11,6 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /var/www/html
 
-# Copy nginx configuration
-COPY docker/nginx.conf /etc/nginx/sites-available/default
-
 # -------------------------------------------
 # Install stage - install dependencies
 # -------------------------------------------
@@ -31,7 +28,8 @@ COPY . .
 
 EXPOSE 80 5173
 
-# Local supervisor config with Vite dev server
+# Local nginx and supervisor config with Vite dev server
+COPY docker/nginx.local.conf /etc/nginx/sites-available/default
 COPY docker/supervisord.local.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
@@ -54,7 +52,8 @@ COPY --from=build /var/www/html/build /var/www/html/build
 COPY --from=build /var/www/html/node_modules /var/www/html/node_modules
 COPY --from=build /var/www/html/package.json /var/www/html/package.json
 
-# Copy supervisor production config
+# Copy nginx and supervisor production config
+COPY docker/nginx.conf /etc/nginx/sites-available/default
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN chown -R node:node /var/www/html
