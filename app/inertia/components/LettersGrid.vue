@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import type { WordsPool, GameData } from '../types/wordsPool'
 import DeleteIcon from './icons/DeleteIcon.vue'
 import EraseIcon from './icons/EraseIcon.vue'
@@ -45,6 +45,77 @@ const resetWord = () => {
   word.value = ''
   selectedLettersIndexes.value = []
 }
+
+// Normalize letter for comparison (handle accented characters)
+const normalizeLetter = (letter: string): string => {
+  return letter.toLowerCase()
+}
+
+// Find available indexes for a given letter (not already selected)
+const findAvailableIndexesForLetter = (inputLetter: string): number[] => {
+  const normalizedInput = normalizeLetter(inputLetter)
+  const availableIndexes: number[] = []
+
+  shuffledLetters.value.forEach((letter, index) => {
+    if (
+      normalizeLetter(letter) === normalizedInput &&
+      !selectedLettersIndexes.value.includes(index)
+    ) {
+      availableIndexes.push(index)
+    }
+  })
+
+  return availableIndexes
+}
+
+// Handle keyboard input
+const handleKeyDown = (event: KeyboardEvent) => {
+  // Ignore if user is typing in an input field
+  if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+    return
+  }
+
+  const key = event.key
+
+  // Handle Enter - submit word
+  if (key === 'Enter') {
+    event.preventDefault()
+    handleWordSubmit()
+    return
+  }
+
+  // Handle Backspace/Delete - remove last letter (or reset word with Shift)
+  if (key === 'Backspace' || key === 'Delete') {
+    event.preventDefault()
+    if (event.shiftKey) {
+      resetWord()
+    } else {
+      removeLastLetter()
+    }
+    return
+  }
+
+  // Handle letter input (single character, letter only)
+  if (key.length === 1 && /[a-zA-ZÀ-ÿ]/.test(key)) {
+    event.preventDefault()
+    const availableIndexes = findAvailableIndexesForLetter(key)
+
+    if (availableIndexes.length > 0) {
+      // Randomly choose one of the available indexes
+      const randomIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)]
+      const letter = shuffledLetters.value[randomIndex]
+      addLetter(letter, randomIndex)
+    }
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
 
 const foundWordButtonStyle = computed(() => {
   if (word.value.length < 4) return 'bg-transparent'
@@ -105,7 +176,7 @@ const handleWordSubmit = () => {
             : 'text-gray-700 dark:text-gray-100',
         ]"
         :disabled="selectedLettersIndexes.includes(index)"
-        @click="addLetter(letter, index)"
+        @click="handleLetterClick($event, letter, index)"
       >
         {{ letter.toUpperCase() }}
       </button>

@@ -8,7 +8,9 @@ const props = defineProps<{
   item: GameHistoryItem
 }>()
 
-const formattedDate = computed(() => formatDateForDisplay(props.item.day))
+const formattedDate = computed(() =>
+  isToday(props.item.day) ? "Aujourd'hui" : formatDateForDisplay(props.item.day)
+)
 
 const gameUrl = computed(() => (isToday(props.item.day) ? '/' : `/game/${props.item.day}`))
 
@@ -24,10 +26,10 @@ const progressBarColor = computed(() => {
 <template>
   <Link
     :href="gameUrl"
-    class="block p-4 mb-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+    class="block p-4 mb-6 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
   >
     <div class="flex justify-between items-center mb-2">
-      <span class="font-medium text-gray-800 dark:text-gray-100 capitalize">
+      <span class="font-medium text-gray-800 dark:text-gray-100 capitalize text-lg">
         {{ formattedDate }}
       </span>
       <span class="text-sm font-bold text-teal-500 dark:text-teal-300">
