@@ -1,10 +1,20 @@
 services:
-  lesmots_database_administration:
-    image: phpmyadmin/phpmyadmin:5
-    environment:
-      PMA_HOSTS: lesmots_database
+  lesmots_pgadmin:
+    container_name: lesmots_pgadmin
+    image: dpage/pgadmin4:latest
     profiles:
       - local
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_CONFIG_ALLOW_SPECIAL_EMAIL_DOMAINS=['localhost']
+    ports:
+      - "8888:80"
+    depends_on:
+      lesmots_database:
+        condition: service_healthy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.lesmots_database_administration.rule=Host(`pma.${DOMAIN}`)
+      - traefik.http.routers.lesmots_pgadmin.rule=Host(`pgadmin.lesmots.${DOMAIN}`)
+      - traefik.http.routers.lesmots_pgadmin.entrypoints=web
+      - traefik.http.services.lesmots_pgadmin.loadbalancer.server.port=80

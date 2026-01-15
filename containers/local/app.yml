@@ -1,0 +1,11 @@
+services:
+  lesmots_app:
+    build:
+      target: local
+    volumes:
+      - ../app:/var/www/html
+      - /var/www/html/node_modules
+    ports:
+      - "5173:5173"
+    labels:
+      - traefik.http.routers.lesmots_app.entrypoints=web

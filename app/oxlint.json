@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": [
+    "import",
+    "unicorn",
+    "promise",
+    "typescript",
+    "oxc",
+    "vitest",
+    "eslint",
+    "vue",
+    "jest",
+    "jsdoc"
+  ],
+  "rules": {
+    "no-unused-vars": "warn"
+  },
+  "ignorePatterns": ["node_modules", "build", "dist"]
+}
