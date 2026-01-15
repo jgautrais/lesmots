@@ -23,6 +23,8 @@ docker compose exec app bash
 You must run inside the container:
 ```bash
 node ace migration:run
+# In production :
+node build/ace.js migration:run
 ```
 
 ## Development
