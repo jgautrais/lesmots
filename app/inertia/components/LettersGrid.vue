@@ -170,13 +170,13 @@ const handleWordSubmit = () => {
         :key="`${letter}-${index * 2}`"
         :class="[
           slideInDurations[index % 4],
-          'transition-all ease-in border rounded border-gray-200 disabled:border-gray-100 dark:border-gray-500 disabled:dark:border-gray-600 text-center min-h-16 my-1 text-4xl font-bold',
+          'touch-manipulation transition-all ease-in border rounded border-gray-200 disabled:border-gray-100 dark:border-gray-500 disabled:dark:border-gray-600 text-center min-h-16 my-1 text-4xl font-bold',
           selectedLettersIndexes.includes(index)
             ? 'text-gray-300 dark:text-gray-500'
             : 'text-gray-700 dark:text-gray-100',
         ]"
         :disabled="selectedLettersIndexes.includes(index)"
-        @click="handleLetterClick($event, letter, index)"
+        @click="addLetter(letter, index)"
       >
         {{ letter.toUpperCase() }}
       </button>
