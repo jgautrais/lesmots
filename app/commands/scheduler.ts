@@ -34,8 +34,8 @@ export default class Scheduler extends BaseCommand {
   async run() {
     this.logger.info('Starting scheduler...')
 
-    // Schedule create:words-pool daily at 01:00 (temporarily every hour for debugging)
-    new Cron('0 * * * *', async () => {
+    // Schedule create:words-pool daily at 01:00
+    new Cron('0 1 * * *', async () => {
       this.logger.info('Running scheduled task: create:words-pool')
       try {
         await this.runCommand('create:words-pool')
