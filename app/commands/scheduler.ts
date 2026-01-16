@@ -1,14 +1,34 @@
 import { BaseCommand } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 import { Cron } from 'croner'
+import { spawn } from 'node:child_process'
 
 export default class Scheduler extends BaseCommand {
   static commandName = 'scheduler:run'
   static description = 'Start the task scheduler'
 
   static options: CommandOptions = {
-    startApp: true,
+    startApp: false,
     staysAlive: true,
+  }
+
+  private runCommand(command: string, args: string[] = []): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const child = spawn('node', ['ace.js', command, ...args], {
+        cwd: process.cwd(),
+        stdio: 'inherit',
+      })
+
+      child.on('close', (code) => {
+        if (code === 0) {
+          resolve()
+        } else {
+          reject(new Error(`Command exited with code ${code}`))
+        }
+      })
+
+      child.on('error', reject)
+    })
   }
 
   async run() {
@@ -18,8 +38,7 @@ export default class Scheduler extends BaseCommand {
     new Cron('0 * * * *', async () => {
       this.logger.info('Running scheduled task: create:words-pool')
       try {
-        const { default: ace } = await import('@adonisjs/core/services/ace')
-        await ace.exec('create:words-pool', [])
+        await this.runCommand('create:words-pool')
         this.logger.success('Scheduled task create:words-pool completed')
       } catch (error) {
         this.logger.error(`Scheduled task create:words-pool failed: ${error}`)
