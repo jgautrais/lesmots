@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { Head, Link } from '@inertiajs/vue3'
+import { computed, onMounted } from 'vue'
+import { Head, Link, router } from '@inertiajs/vue3'
 import NavBar from '../components/NavBar.vue'
 import Game from '../components/Game.vue'
 import type { WordsPoolWithDay } from '../types/wordsPool'
-import { isToday } from '../utils/date'
+import { getCurrentDateFormatted, isToday } from '../utils/date'
 
 const props = defineProps<{
   wordsPool: WordsPoolWithDay | null
 }>()
+
+// Redirect from / to /game/{localDate} to ensure user's timezone is used
+onMounted(() => {
+  if (window.location.pathname === '/') {
+    const localToday = getCurrentDateFormatted()
+    router.replace(`/game/${localToday}`)
+  }
+})
 
 const detailsUrl = computed(() =>
   props.wordsPool && !isToday(props.wordsPool.day)

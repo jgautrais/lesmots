@@ -1,16 +1,20 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { useTheme } from '../composables/useTheme'
+import { getCurrentDateFormatted } from '../utils/date'
 import DarkThemeIcon from './icons/DarkThemeIcon.vue'
 import LightThemeIcon from './icons/LightThemeIcon.vue'
 import HistoryIcon from './icons/HistoryIcon.vue'
 
 const { theme, switchTheme } = useTheme()
+
+const todayUrl = computed(() => `/game/${getCurrentDateFormatted()}`)
 </script>
 
 <template>
   <header class="container mx-auto w-full">
-    <Link href="/">
+    <Link :href="todayUrl">
       <h1 class="text-4xl font-bold text-center py-8 font-serif">Les Mots</h1>
     </Link>
     <Link href="/history" class="absolute top-9 left-4 md:left-8 pe-8 pb-4">

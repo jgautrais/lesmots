@@ -12,7 +12,7 @@ const formattedDate = computed(() =>
   isToday(props.item.day) ? "Aujourd'hui" : formatDateForDisplay(props.item.day)
 )
 
-const gameUrl = computed(() => (isToday(props.item.day) ? '/' : `/game/${props.item.day}`))
+const gameUrl = computed(() => `/game/${props.item.day}`)
 
 const progressBarColor = computed(() => {
   const pct = props.item.completionPercentage
